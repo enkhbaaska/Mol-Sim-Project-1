@@ -1,0 +1,50 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.integrate as integrate
+# B2N = integrate.quad(B2, 0, 20)[0]
+from scipy.optimize import broyden1
+# a=broyden1(B2, 4) # 4 is initial guess
+
+#np.random.rand()
+
+def U(r):
+    epsilon = 1.41 * 10 **(-22)
+    sigma = 2.56 * 10**(-10)
+    return 4*epsilon*((sigma/r)**12-(sigma/r)**6)
+    
+    
+def f(r):
+    # * f (r) = 1− e−U(r )/kT ( )r2 ***
+    epsilon = 1.41 * 10 **(-22)
+    sigma = 2.56 * 10**(-10)
+    U = 4*epsilon*((sigma/r)**12-(sigma/r)**6)
+    k = 1.38064852 * 10**(-23)
+    T = 300
+    return (1-np.e**(-U/(k*T)))*r**2
+
+n = 2000
+xlim2 = float('inf')
+xlim1 = 0
+ymax = 0
+for i in range(n): # for every value of n
+    Rx = (xlim2-xlim1)*np.random.rand() + xlim1 # Set Rx, a random number
+    Ry = ymax*np.random.rand() # Set Ry, a random number
+    if Ry <= f(Rx): # if we are below the curve
+        s = s+1 # increment counter
+        av_f = A*s/n # ratio below curve * area = integral estimate
+
+
+r1 = np.linspace(0, 20*10**(-10), 1000)
+U1 = U(r1)
+f1 = f(r1)
+
+#plt.plot(r1,f1)
+plt.semilogx(r1,f1)
+#print(np.e**(1))
+#print(np.e*1)
+
+
+
+
+
+    
